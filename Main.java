@@ -59,14 +59,18 @@ public class Main extends Application{//application definition
             Button patient_info_button = new Button("Patient Information");//create patient information button
             Button send_messages_button = new Button("Send Message") ; // create patient button
             Button log_out_button = new Button("Log Out"); //create nurse button
+            Button back_button = new Button("Back"); // create back button
 
             patient_info_button.setPrefSize(200,100);  //create doctor button
             send_messages_button.setPrefSize(200,100);  //create doctor button
             log_out_button.setPrefSize(200,100);  //create doctor button
+            back_button.setPrefSize(200,100); // create back button
 
-            left_box.getChildren().addAll(patient_info_button,send_messages_button,log_out_button);//add all the buttons to the left_box VBox
+            left_box.getChildren().addAll(patient_info_button,send_messages_button,log_out_button, back_button); //add all the buttons to the left_box VBox
             left_box.setSpacing(20); //add spacing to the vbox for formatting
             main_patient_grid.add(left_box, 0,2);//add left box to the main grid
+
+            back_button.setOnAction((d) -> primaryStage.setScene(start_page)); // creates path back to home page
 
             GridPane center_grid = new GridPane();//create a new gridpane for the center panel
             Label center_title = new Label("Log In");//add label to center panel
@@ -169,6 +173,64 @@ public class Main extends Application{//application definition
             primaryStage.setScene(patient_page);//make the scene the patient page
             primaryStage.setTitle("Patient Page");//title for the patient page
             e.consume();//consume the action so it can be reset
+        });
+
+        newpatientButton.setOnAction((e) -> {//change scene when new patient button is clicked
+            GridPane newPatientGrid = new GridPane();
+
+            newPatientGrid.prefWidthProperty().bind(primaryStage.widthProperty().multiply(100));//bind the width of the gridbox to the primary stage
+
+            VBox newPatientPage = new VBox(3);
+            Scene newPatientScene = new Scene(newPatientPage, 600, 600);
+            primaryStage.setScene(newPatientScene);
+
+            // Setting up buttons (copied from patient page above)
+            Button patient_info_button = new Button("Patient Information");//create patient information button
+            Button send_messages_button = new Button("Send Message") ; // create patient button
+            Button log_out_button = new Button("Log Out"); //create nurse button
+            Button back_button = new Button("Back"); // create back button
+
+            patient_info_button.setPrefSize(200,100);  //style doctor button
+            send_messages_button.setPrefSize(200,100);  //style doctor button
+            log_out_button.setPrefSize(200,100);  //style doctor button
+            back_button.setPrefSize(200,100); // style back button
+
+            back_button.setOnAction((b) -> primaryStage.setScene(start_page)); // creates path back to home page
+
+            Label new_patient_title = new Label("New Patient Portal");//title for the patient portal page
+            new_patient_title.setFont(new Font("Cambria", 40));//change font and size
+            newPatientGrid.add(new_patient_title, 0,0);//main grid for the patient portal page
+
+            newPatientPage.getChildren().addAll(patient_info_button, send_messages_button, log_out_button, back_button);
+        
+        });
+
+        nursedocButton.setOnAction((e) -> {//change scene when doctor/nurse button is clicked
+            GridPane nursedocGrid = new GridPane();
+
+            VBox leftBox = new VBox(3);
+            Scene nursedocScene = new Scene(leftBox, 600, 600);
+            primaryStage.setScene(nursedocScene);
+
+            // Setting up buttons (copied from patient page above)
+            Button patient_info_button = new Button("Patient Information");//create patient information button
+            Button send_messages_button = new Button("Inbox/Outbox") ; // create patient button
+            Button log_out_button = new Button("Log Out"); //create nurse button
+            Button back_button = new Button("Back"); // create back button
+
+            patient_info_button.setPrefSize(200,100);  //style doctor button
+            send_messages_button.setPrefSize(200,100);  //style doctor button
+            log_out_button.setPrefSize(200,100);  //style doctor button
+            back_button.setPrefSize(200,100); // style back button
+
+            back_button.setOnAction((b) -> primaryStage.setScene(start_page)); // creates path back to home page
+
+            Label nurse_doc_title = new Label("Nurse and Doctor Portal");//title for the patient portal page
+            nurse_doc_title.setFont(new Font("Cambria", 40));//change font and size
+            nursedocGrid.add(nurse_doc_title, 0,0);//main grid for the patient portal page
+
+            leftBox.getChildren().addAll(patient_info_button, send_messages_button, log_out_button, back_button);
+        
         });
 
     }
