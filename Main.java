@@ -70,7 +70,10 @@ public class Main extends Application{//application definition
             left_box.setSpacing(20); //add spacing to the vbox for formatting
             main_patient_grid.add(left_box, 0,2);//add left box to the main grid
 
-            back_button.setOnAction((d) -> primaryStage.setScene(start_page)); // creates path back to home page
+            back_button.setOnAction((d) -> {
+                primaryStage.setScene(start_page); //return to start page (path back to home page)
+                primaryStage.setTitle("Login Page");//set title at top of page
+            });//set title at top of page);
 
             GridPane center_grid = new GridPane();//create a new gridpane for the center panel
             Label center_title = new Label("Log In");//add label to center panel
@@ -195,7 +198,11 @@ public class Main extends Application{//application definition
             log_out_button.setPrefSize(200,100);  //style doctor button
             back_button.setPrefSize(200,100); // style back button
 
-            back_button.setOnAction((b) -> primaryStage.setScene(start_page)); // creates path back to home page
+            back_button.setOnAction((d) -> {
+                primaryStage.setScene(start_page); //return to start page (path back to home page)
+                primaryStage.setTitle("Login Page");//set title at top of page
+            });//set title at top of page);
+
 
             Label new_patient_title = new Label("New Patient Portal");//title for the patient portal page
             new_patient_title.setFont(new Font("Cambria", 40));//change font and size
@@ -207,30 +214,65 @@ public class Main extends Application{//application definition
 
         nursedocButton.setOnAction((e) -> {//change scene when doctor/nurse button is clicked
             GridPane nursedocGrid = new GridPane();
+            nursedocGrid.prefWidthProperty().bind(primaryStage.widthProperty().multiply(100));//bind the width of the gridbox to the primary stage
+            
+            Label patient_title = new Label("Patient Portal");//title for the patient portal page
+            patient_title.setFont(new Font("Cambria", 40));//change font and size
+            nursedocGrid.add(patient_title, 0,0);//main grid for the patient portal page
 
-            VBox leftBox = new VBox(3);
-            Scene nursedocScene = new Scene(leftBox, 600, 600);
-            primaryStage.setScene(nursedocScene);
-
-            // Setting up buttons (copied from patient page above)
+            VBox left_box = new VBox(3);
             Button patient_info_button = new Button("Patient Information");//create patient information button
-            Button send_messages_button = new Button("Inbox/Outbox") ; // create patient button
+            Button send_messages_button = new Button("Send Message") ; // create patient button
             Button log_out_button = new Button("Log Out"); //create nurse button
             Button back_button = new Button("Back"); // create back button
 
-            patient_info_button.setPrefSize(200,100);  //style doctor button
-            send_messages_button.setPrefSize(200,100);  //style doctor button
-            log_out_button.setPrefSize(200,100);  //style doctor button
-            back_button.setPrefSize(200,100); // style back button
+            patient_info_button.setPrefSize(200,100); //patient info button
+            send_messages_button.setPrefSize(200,100);  //send messages button
+            log_out_button.setPrefSize(200,100);    //log out button
+            back_button.setPrefSize(200,100); // create back button
 
-            back_button.setOnAction((b) -> primaryStage.setScene(start_page)); // creates path back to home page
+            left_box.getChildren().addAll(patient_info_button,send_messages_button,log_out_button, back_button); //add all the buttons to the left_box VBox
+            left_box.setSpacing(20); //add spacing to the vbox for formatting
+            nursedocGrid.add(left_box, 0,2);//add left box to the main grid
 
-            Label nurse_doc_title = new Label("Nurse and Doctor Portal");//title for the patient portal page
-            nurse_doc_title.setFont(new Font("Cambria", 40));//change font and size
-            nursedocGrid.add(nurse_doc_title, 0,0);//main grid for the patient portal page
+            back_button.setOnAction((d) -> {
+                primaryStage.setScene(start_page); //return to start page (path back to home page)
+                primaryStage.setTitle("Login Page");//set title at top of page
+            });//set title at top of page);
 
-            leftBox.getChildren().addAll(patient_info_button, send_messages_button, log_out_button, back_button);
-        
+            GridPane center_grid = new GridPane();//create a new gridpane for the center panel
+            Label center_title = new Label("Log In");//add label to center panel
+            center_title.setFont(new Font("Cambria", 32));//change title font
+            center_grid.add(center_title, 0,0);//add center title to the center grid
+
+            //create labels for the username and password field for the center grid
+            Label username_label = new Label("Username");
+            Label password_label = new Label("Password");
+
+            //create textfields for user to enter their username and password
+            TextField username_field = new TextField();
+            TextField password_field = new TextField();
+
+            Button log_in_button = new Button("Log In");//button to submit username and password
+
+            //add labels and text boxes to the center grid
+            center_grid.add(username_label, 0,2);
+            center_grid.add(username_field, 1,2);
+            center_grid.add(password_label, 0,3);
+            center_grid.add(password_field, 1,3);
+            center_grid.add(log_in_button, 2,4);
+            nursedocGrid.add(center_grid, 2,2, 2,2);//add the center grid to the main grid
+
+
+            nursedocGrid.setHgap(10);//set the horizontal gap between panels
+            nursedocGrid.setVgap(10);//set the vertical gap between panels
+
+            Scene nursedocScene = new Scene(nursedocGrid, 1200, 900);//create patient portal scene containing the main patient grid
+            
+            primaryStage.setScene(nursedocScene);//make the scene the nurse/doc page
+            primaryStage.setTitle("Nurse and Doctor Portal");//title for the nurse/doc page
+            e.consume();//consume the action so it can be reset
+            
         });
 
     }
