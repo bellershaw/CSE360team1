@@ -20,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
 import java.util.*;
+import java.io.*;
 
 
 public class Main extends Application{//application definition
@@ -51,7 +52,7 @@ public class Main extends Application{//application definition
             main_patient_grid.prefWidthProperty().bind(primaryStage.widthProperty().multiply(100));//bind the width of the gridbox to the primary stage
             //main_patient_grid.setGridLinesVisible(true);//debugging, used to view grid lines
 
-            Label patient_title = new Label("Patient Portal");//title for the patient portal page
+            Label patient_title = new Label("Login Portal");//title for the patient portal page
             patient_title.setFont(new Font("Cambria", 40));//change font and size
             main_patient_grid.add(patient_title, 0,0);//main grid for the patient portal page
 
@@ -89,7 +90,7 @@ public class Main extends Application{//application definition
             TextField password_field = new TextField();
 
             Button log_in_button = new Button("Log In");//button to submit username and password
-
+            
             //add labels and text boxes to the center grid
             center_grid.add(username_label, 0,2);
             center_grid.add(username_field, 1,2);
@@ -157,6 +158,8 @@ public class Main extends Application{//application definition
             Button edit_button_6 = new Button("edit");
             Button pat_sub_button = new Button("Submit");//button to submit the new data
 
+            //TODO: Create a new patient button
+
             //add edit and submit buttons to the right panel
             right_grid.add(edit_button_1, 2,4);
             right_grid.add(edit_button_2, 2,5);
@@ -174,8 +177,41 @@ public class Main extends Application{//application definition
             Scene patient_page = new Scene(main_patient_grid, 1200, 900);//create patient portal scene containing the main patient grid
             
             primaryStage.setScene(patient_page);//make the scene the patient page
-            primaryStage.setTitle("Patient Page");//title for the patient page
+            primaryStage.setTitle("Login Portal");//title for the patient page
             e.consume();//consume the action so it can be reset
+
+            
+            //TODO: existing patient login      
+            log_in_button.setOnAction((d) -> {
+                if (-1 != checkLogin(username_field.getText(), password_field.getText())) {
+                        System.out.print("Login worked");       //debug
+                        /*name_field = ;
+                        dob_field = ;
+                        sex_field = ;
+                        address_field = ;
+                        phone_field = ;
+                        pref_pharm_field = ;
+                        em_con_name_field = ;
+                        em_con_num_field = ;
+                        em_con_rel_field = ;*/
+                    }
+                else{
+                    System.out.print("Login didnt work");       //debug
+                    //Dont really need a 'login failed' GUI
+                }
+                /*switch (checkLogin(username_field.getText(), password_field.getText()).charAt(0)) {
+                    case 0: //doctor
+
+                        break;
+                    case 1: //nurse
+
+                        break;
+                    case 2: //patient
+                        
+                        break;
+                }*/
+            d.consume();
+            });
         });
 
         newpatientButton.setOnAction((e) -> {//change scene when new patient button is clicked
@@ -198,6 +234,8 @@ public class Main extends Application{//application definition
             log_out_button.setPrefSize(200,100);  //style doctor button
             back_button.setPrefSize(200,100); // style back button
 
+            //TODO: 
+
             back_button.setOnAction((d) -> {
                 primaryStage.setScene(start_page); //return to start page (path back to home page)
                 primaryStage.setTitle("Login Page");//set title at top of page
@@ -212,76 +250,54 @@ public class Main extends Application{//application definition
         
         });
 
-        nursedocButton.setOnAction((e) -> {//change scene when doctor/nurse button is clicked
-            GridPane nursedocGrid = new GridPane();
-            nursedocGrid.prefWidthProperty().bind(primaryStage.widthProperty().multiply(100));//bind the width of the gridbox to the primary stage
-            
-            Label patient_title = new Label("Nurse/Doctor Portal");//title for the patient portal page
-            patient_title.setFont(new Font("Cambria", 40));//change font and size
-            nursedocGrid.add(patient_title, 0,0);//main grid for the patient portal page
-
-            VBox left_box = new VBox(3);
-            Button patient_info_button = new Button("Patient Information");//create patient information button
-            Button send_messages_button = new Button("Send Message") ; // create patient button
-            Button log_out_button = new Button("Log Out"); //create nurse button
-            Button back_button = new Button("Back"); // create back button
-
-            patient_info_button.setPrefSize(200,100); //patient info button
-            send_messages_button.setPrefSize(200,100);  //send messages button
-            log_out_button.setPrefSize(200,100);    //log out button
-            back_button.setPrefSize(200,100); // create back button
-
-            left_box.getChildren().addAll(patient_info_button,send_messages_button,log_out_button, back_button); //add all the buttons to the left_box VBox
-            left_box.setSpacing(20); //add spacing to the vbox for formatting
-            nursedocGrid.add(left_box, 0,2);//add left box to the main grid
-
-            back_button.setOnAction((d) -> {
-                primaryStage.setScene(start_page); //return to start page (path back to home page)
-                primaryStage.setTitle("Login Page");//set title at top of page
-            });//set title at top of page);
-
-            GridPane center_grid = new GridPane();//create a new gridpane for the center panel
-            Label center_title = new Label("Log In");//add label to center panel
-            center_title.setFont(new Font("Cambria", 32));//change title font
-            center_grid.add(center_title, 0,0);//add center title to the center grid
-
-            //create labels for the username and password field for the center grid
-            Label username_label = new Label("Username");
-            Label password_label = new Label("Password");
-
-            //create textfields for user to enter their username and password
-            TextField username_field = new TextField();
-            TextField password_field = new TextField();
-
-            Button log_in_button = new Button("Log In");//button to submit username and password
-
-            //add labels and text boxes to the center grid
-            center_grid.add(username_label, 0,2);
-            center_grid.add(username_field, 1,2);
-            center_grid.add(password_label, 0,3);
-            center_grid.add(password_field, 1,3);
-            center_grid.add(log_in_button, 2,4);
-            nursedocGrid.add(center_grid, 2,2, 2,2);//add the center grid to the main grid
-
-            GridPane right_grid = new GridPane();//create a new gridpane for the right panel
-            Label right_title = new Label("Patient List");//add label to right panel
-            right_title.setFont(new Font("Cambria", 32));//change title font
-            center_grid.add(right_title, 0,0);//add right title to the center grid
-
-            // Create labels for data
-
-            nursedocGrid.setHgap(10);//set the horizontal gap between panels
-            nursedocGrid.setVgap(10);//set the vertical gap between panels
-
-            Scene nursedocScene = new Scene(nursedocGrid, 1200, 900);//create patient portal scene containing the main patient grid
-            
-            primaryStage.setScene(nursedocScene);//make the scene the nurse/doc page
-            primaryStage.setTitle("Nurse and Doctor Portal");//title for the nurse/doc page
-            e.consume();//consume the action so it can be reset
-            
-        });
-
     }
 
 public static void main(String[] args) {launch(args);}; // method inside application class that sets up javafx application
+
+    static void print(String toPrint){
+        System.out.println(toPrint);
+        }
+
+    static int checkLogin(String uname, String pass){
+        File login_file = new File("C:/Users/nofam/Desktop/CSE360/CSE360team1/database/loginData.csv");
+
+        try{
+            Scanner login_scanner = new Scanner(login_file);
+            int i = 0;
+            while (login_scanner.hasNextLine()) {
+                if (i == 0){
+                    String current_line = login_scanner.nextLine();
+                    i++;
+                }
+                else{
+
+                String current_line = login_scanner.nextLine();
+                print("current_line" + current_line);
+                String file_uname = current_line.substring(0,current_line.indexOf(","));
+                String file_pass = current_line.substring((current_line.indexOf(",") + 1),(current_line.indexOf(",",(current_line.indexOf(",") + 1))));
+                String file_pos = current_line.substring((current_line.indexOf(",",(current_line.indexOf(",") + 1)) + 1),current_line.lastIndexOf(","));
+                int file_id = Integer.parseInt(current_line.substring((current_line.lastIndexOf(",") + 1)));
+                /*
+                print(uname);
+                print(file_uname);
+                print(pass);
+                print(file_pass);
+                */
+                if ((file_uname.compareTo(uname) == 0) && (file_pass.compareTo(pass) == 0)){
+                    login_scanner.close();
+                    print("Login worked");
+                    return file_id;//if matching username and password, return id
+                }
+             }
+            }
+            login_scanner.close();
+            print("Login didnt work");
+            return -1;//no matching username or password is found, return -1
+            
+        }
+        catch(FileNotFoundException e){
+            print("FNF");
+            return -1;
+        }
+    }
 }
