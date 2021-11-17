@@ -1,0 +1,4 @@
+username, password, role
+DoctorDerek, 123456, Doctor
+NurseNancy, monkey1, Nurse
+JohnDoe, qwerty, Patient

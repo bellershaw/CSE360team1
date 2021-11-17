@@ -216,7 +216,7 @@ public class Main extends Application{//application definition
             GridPane nursedocGrid = new GridPane();
             nursedocGrid.prefWidthProperty().bind(primaryStage.widthProperty().multiply(100));//bind the width of the gridbox to the primary stage
             
-            Label patient_title = new Label("Patient Portal");//title for the patient portal page
+            Label patient_title = new Label("Nurse/Doctor Portal");//title for the patient portal page
             patient_title.setFont(new Font("Cambria", 40));//change font and size
             nursedocGrid.add(patient_title, 0,0);//main grid for the patient portal page
 
@@ -263,6 +263,12 @@ public class Main extends Application{//application definition
             center_grid.add(log_in_button, 2,4);
             nursedocGrid.add(center_grid, 2,2, 2,2);//add the center grid to the main grid
 
+            GridPane right_grid = new GridPane();//create a new gridpane for the right panel
+            Label right_title = new Label("Patient List");//add label to right panel
+            right_title.setFont(new Font("Cambria", 32));//change title font
+            center_grid.add(right_title, 0,0);//add right title to the center grid
+
+            // Create labels for data
 
             nursedocGrid.setHgap(10);//set the horizontal gap between panels
             nursedocGrid.setVgap(10);//set the vertical gap between panels
