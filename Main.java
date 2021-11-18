@@ -200,14 +200,35 @@ public class Main extends Application{//application definition
             
                             Button searchPatient = new Button("Search Patient");
 
-                            /*
+                            //center_grid.add(firstName_field, lastName_field, searchBar, searchPatient)
+                            
                             searchPatient.setOnAction((g) -> {
-                                id = choosePatInfo(firstName_field.getText(), lastName_field.getText());
+                                int tmp_id = choosePatInfo(firstName_field.getText(), lastName_field.getText());
+                                String[] tmp_pat_array = getPatInfo(tmp_id);
+                                current_patient.setID(tmp_pat_array[0]);
+                                current_patient.setName(tmp_pat_array[1]);
+                                current_patient.setDOB(tmp_pat_array[2]);
+                                current_patient.setSex(tmp_pat_array[3]);
+                                current_patient.setAddress(tmp_pat_array[4]);
+                                current_patient.setPhoneNumber(tmp_pat_array[5]);
+                                current_patient.setPrefPharm(tmp_pat_array[6]);
+                                current_patient.setEMC_name(tmp_pat_array[7]);
+                                current_patient.setEMC_phoneNumber(tmp_pat_array[8]);
+                                current_patient.setEMC_relationship(tmp_pat_array[9]);
+            
+                                name_field.setText(tmp_pat_array[1]);
+                                dob_field.setText(tmp_pat_array[2]);
+                                sex_field.setText(tmp_pat_array[3]);
+                                address_field.setText(tmp_pat_array[4]);
+                                phone_field.setText(tmp_pat_array[5]);
+                                pref_pharm_field.setText(tmp_pat_array[6]);
+                                em_con_name_field.setText(tmp_pat_array[7]);
+                                em_con_num_field.setText(tmp_pat_array[8]);
+                                em_con_rel_field.setText(tmp_pat_array[9]);
                                 g.consume();
                             });
-                            */
                             
-
+                            
                             break;
                         case '1':               //nurse
                             /*
@@ -216,30 +237,31 @@ public class Main extends Application{//application definition
                             //first and last name search box. finds patient and sets the patient id to the id
                             break;
                         case '2':               //patient
-                        pat_array = getPatInfo(id);
+                            pat_array = getPatInfo(id);
+                            current_patient.setID(pat_array[0]);
+                            current_patient.setName(pat_array[1]);
+                            current_patient.setDOB(pat_array[2]);
+                            current_patient.setSex(pat_array[3]);
+                            current_patient.setAddress(pat_array[4]);
+                            current_patient.setPhoneNumber(pat_array[5]);
+                            current_patient.setPrefPharm(pat_array[6]);
+                            current_patient.setEMC_name(pat_array[7]);
+                            current_patient.setEMC_phoneNumber(pat_array[8]);
+                            current_patient.setEMC_relationship(pat_array[9]);
+        
+                            name_field.setText(pat_array[1]);
+                            dob_field.setText(pat_array[2]);
+                            sex_field.setText(pat_array[3]);
+                            address_field.setText(pat_array[4]);
+                            phone_field.setText(pat_array[5]);
+                            pref_pharm_field.setText(pat_array[6]);
+                            em_con_name_field.setText(pat_array[7]);
+                            em_con_num_field.setText(pat_array[8]);
+                            em_con_rel_field.setText(pat_array[9]);
                             break;
                     }
 
-                    current_patient.setID(pat_array[0]);
-                    current_patient.setName(pat_array[1]);
-                    current_patient.setDOB(pat_array[2]);
-                    current_patient.setSex(pat_array[3]);
-                    current_patient.setAddress(pat_array[4]);
-                    current_patient.setPhoneNumber(pat_array[5]);
-                    current_patient.setPrefPharm(pat_array[6]);
-                    current_patient.setEMC_name(pat_array[7]);
-                    current_patient.setEMC_phoneNumber(pat_array[8]);
-                    current_patient.setEMC_relationship(pat_array[9]);
 
-                    name_field.setText(pat_array[1]);
-                    dob_field.setText(pat_array[2]);
-                    sex_field.setText(pat_array[3]);
-                    address_field.setText(pat_array[4]);
-                    phone_field.setText(pat_array[5]);
-                    pref_pharm_field.setText(pat_array[6]);
-                    em_con_name_field.setText(pat_array[7]);
-                    em_con_num_field.setText(pat_array[8]);
-                    em_con_rel_field.setText(pat_array[9]);
 
                 }
                 else{
