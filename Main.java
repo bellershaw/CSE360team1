@@ -27,20 +27,20 @@ public class Main extends Application{//application definition
 
     @Override
     public void start (Stage primaryStage){//main stage in project, is the log in page
+        Patient current_patient = new Patient();
         primaryStage.setTitle("Login Page");//set title at top of page
-        Button expatientButton = new Button("I am an exiting patient");  //create doctor button
-        Button newpatientButton = new Button("I am a new patient") ; //create patient button
-        Button nursedocButton = new Button("I am a doctor or nurse"); //create nurse button
+        Button expatientButton = new Button("Login");
+        Button newpatientButton = new Button("I am a new user"); //create patient button
+
 
         //create buttons for log in page
         expatientButton.setPrefSize(200,100);
         newpatientButton.setPrefSize(200,100);
-        nursedocButton.setPrefSize(200,100);
 
         //create VBox for log in page and add buttons 
         VBox login_vbox = new VBox();
         login_vbox.setAlignment(Pos.CENTER);
-        login_vbox.getChildren().addAll(expatientButton,newpatientButton,nursedocButton);//add all the buttons to the left_box VBox
+        login_vbox.getChildren().addAll(expatientButton,newpatientButton);//add all the buttons to the left_box VBox
 
         //create scene for start page
         Scene start_page = new Scene(login_vbox, 600, 600); //create scene containing the log in vbox
@@ -128,9 +128,9 @@ public class Main extends Application{//application definition
             right_grid.add(relationship_label, 0,10);
 
             //create textfields for right panel information
-            TextField name_field = new TextField("Patient Name");
-            TextField dob_field = new TextField("MM/DD/YYYY");
-            TextField sex_field = new TextField("M/F");
+            Label name_field = new Label("Patient Name");
+            Label dob_field = new Label("MM/DD/YYYY");
+            Label sex_field = new Label("M/F");
             TextField address_field = new TextField("Enter");
             TextField phone_field = new TextField("000-000-0000");
             TextField pref_pharm_field = new TextField("Enter");
@@ -150,24 +150,22 @@ public class Main extends Application{//application definition
             right_grid.add(em_con_rel_field, 1,10);
 
             //buttons to submit changes to some of the patient information
-            Button edit_button_1 = new Button("edit");
-            Button edit_button_2 = new Button("edit");
-            Button edit_button_3 = new Button("edit");
-            Button edit_button_4 = new Button("edit");
-            Button edit_button_5 = new Button("edit");
-            Button edit_button_6 = new Button("edit");
-            Button pat_sub_button = new Button("Submit");//button to submit the new data
+            Button save_button_1 = new Button("save");
+            Button save_button_2 = new Button("save");
+            Button save_button_3 = new Button("save");
+            Button save_button_4 = new Button("save");
+            Button save_button_5 = new Button("save");
+            Button save_button_6 = new Button("save");
 
-            //TODO: Create a new patient button
+            //Create a new patient button
 
             //add edit and submit buttons to the right panel
-            right_grid.add(edit_button_1, 2,4);
-            right_grid.add(edit_button_2, 2,5);
-            right_grid.add(edit_button_3, 2,6);
-            right_grid.add(edit_button_4, 2,8);
-            right_grid.add(edit_button_5, 2,9);
-            right_grid.add(edit_button_6, 2,10);
-            right_grid.add(pat_sub_button, 3,11);
+            right_grid.add(save_button_1, 2,4);
+            right_grid.add(save_button_2, 2,5);
+            right_grid.add(save_button_3, 2,6);
+            right_grid.add(save_button_4, 2,8);
+            right_grid.add(save_button_5, 2,9);
+            right_grid.add(save_button_6, 2,10);
 
             main_patient_grid.add(right_grid, 4,2, 2,1);//add right grid to the main grid
 
@@ -183,33 +181,43 @@ public class Main extends Application{//application definition
             
             //TODO: existing patient login      
             log_in_button.setOnAction((d) -> {
-                if (-1 != checkLogin(username_field.getText(), password_field.getText())) {
-                        System.out.print("Login worked");       //debug
-                        /*name_field = ;
-                        dob_field = ;
-                        sex_field = ;
-                        address_field = ;
-                        phone_field = ;
-                        pref_pharm_field = ;
-                        em_con_name_field = ;
-                        em_con_num_field = ;
-                        em_con_rel_field = ;*/
+                int id = checkLogin(username_field.getText(), password_field.getText());
+                if (-1 != id) {
+                    System.out.print("Login worked");       //debug
+                    print(id);
+                    char perms = String.valueOf(id).charAt(0);
+                    System.out.println(perms);
+                    String[] pat_array = new String[10];
+                    switch (perms) {
+                        case '0': //doctor
+                        //textbox to input a patient first and last name
+                        choosePatInfo(id);
+                       
+                            break;
+                        case '1': //nurse
+                        //textbox to input patient first and last name
+                        choosePatInfo(id);
+                            break;
+                        case '2': //patient
+                        pat_array = getPatInfo(id);
+                            break;
                     }
+                    name_field.setText(pat_array[1]);
+                    dob_field.setText(pat_array[2]);
+                    sex_field.setText(pat_array[3]);
+                    address_field.setText(pat_array[4]);
+                    phone_field.setText(pat_array[5]);
+                    pref_pharm_field.setText(pat_array[6]);
+                    em_con_name_field.setText(pat_array[7]);
+                    em_con_num_field.setText(pat_array[8]);
+                    em_con_rel_field.setText(pat_array[9]);
+
+                }
                 else{
                     System.out.print("Login didnt work");       //debug
                     //Dont really need a 'login failed' GUI
                 }
-                /*switch (checkLogin(username_field.getText(), password_field.getText()).charAt(0)) {
-                    case 0: //doctor
-
-                        break;
-                    case 1: //nurse
-
-                        break;
-                    case 2: //patient
-                        
-                        break;
-                }*/
+                
             d.consume();
             });
         });
@@ -234,7 +242,6 @@ public class Main extends Application{//application definition
             log_out_button.setPrefSize(200,100);  //style doctor button
             back_button.setPrefSize(200,100); // style back button
 
-            //TODO: 
 
             back_button.setOnAction((d) -> {
                 primaryStage.setScene(start_page); //return to start page (path back to home page)
@@ -254,7 +261,7 @@ public class Main extends Application{//application definition
 
 public static void main(String[] args) {launch(args);}; // method inside application class that sets up javafx application
 
-    static void print(String toPrint){
+    static void print(Object toPrint){//custom print function so we dont have to type system.out everytime
         System.out.println(toPrint);
         }
 
@@ -299,5 +306,65 @@ public static void main(String[] args) {launch(args);}; // method inside applica
             print("FNF");
             return -1;
         }
+    }
+    static String[] getPatInfo(int id){
+        String[] return_string = new String[10];
+        File login_file = new File("C:/Users/nofam/Desktop/CSE360/CSE360team1/database/patientInfo.csv");
+        try{
+            Scanner login_scanner = new Scanner(login_file);
+            String current_line;
+            int i = 0;
+            while (login_scanner.hasNextLine()) {
+                if (i == 0){
+                    current_line = login_scanner.nextLine();
+                    i++;
+                }
+                else{
+                    current_line = login_scanner.nextLine();
+                    int file_id = Integer.parseInt(current_line.substring(0,current_line.indexOf(",")));
+                    if(id == file_id){
+                        print("id found");
+                        for (int j = 0; j< 10; j++ ){
+                            //print(current_line);
+                            if (j < 9){
+                                return_string[j] = current_line.substring(0,current_line.indexOf(","));
+                            }
+                            else{
+                                return_string[j] = current_line.substring(current_line.indexOf(",") + 1);
+                            }
+                            current_line = current_line.substring(current_line.indexOf(",") + 1);
+                            
+                        }
+                    }
+                }
+            }
+            login_scanner.close();
+           //no matching username or password is found, return -1
+           return return_string;
+            
+        }
+        catch(FileNotFoundException e){
+            print("FNF");
+            return return_string;
+        }
+    }
+
+    static void choosePatInfo(int id){
+            print("kms");
+
+            Button searchPatient = new Button("Search"); // create search button
+            searchPatient.setPrefSize(300,100);  //put search button SOMEWHERE?
+            Label searchBar = new Label("FirstLastName");
+            //right_grid.add(searchBar, 100,0);
+            //right_grid.add(searchPatient, 100,50);
+
+            //searchPatient.onAction()
+
+            return;
+    }
+    static void saveInfo(int info_num, String new_info, int id){
+        String[] info_array = getPatInfo(id);
+        //info_array[]
+        return;
     }
 }
